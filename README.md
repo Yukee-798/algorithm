@@ -1,4 +1,4 @@
-# blog
-## 主要包括的内容
-* 算法
-* 英语
+# Blog
+## The Main Content
+* algorithm
+* English
