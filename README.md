@@ -1,4 +1,3 @@
-# Blog
-## The Main Content
-* algorithm
-* English
+# Daily algorithm exercise
+### 2021-02-16
+reivewd some sort algorithm
