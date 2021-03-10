@@ -146,13 +146,118 @@ function containAll(map2, map1): boolean {
 }
 
 
-const obj = { A: 1, B: 1, C: 1 };
+// const ss = 'ASFIWSFSV';
 
-const ss = 'ASFIWSFSV';
+// // 使用 for of
+// for (const char of ss) {
+//     console.log(char);
+// }
 
-// 使用 for of
-for (const char of ss) {
-    console.log(char);
+
+
+
+// console.log(minWindow2(s, t));
+
+function minWindow2(s: string, t: string): string {
+    const map = {};
+    let l = -1, r = -1;
+    let minLen = s.length + 1;
+
+    // 记录 map 中 key 的种类
+    let keyTypes = 0;
+
+    for (const char of t) {
+        if (!(char in map)) {
+            map[char] = 1;
+            keyTypes++;
+        } else {
+            map[char]++;
+        }
+    }
+
+    
+    let start = 0;
+    // 开滑！
+    for (let end = 0; end < s.length; end++) {
+
+        console.log(map);
+        console.log(keyTypes);
+
+// const s = 'ADOBECODEBANC';
+// const t = 'ABC';
+
+        // end 指向的字符
+        const eChar = s.charAt(end);
+        if (eChar in map) {
+            map[eChar]--;
+
+            if (map[eChar] === 0) {
+                keyTypes--;
+            }
+        }
+
+
+       
+
+        while (keyTypes === 0) {
+            if ((end - start + 1) < minLen) {
+                minLen = end - start + 1;
+                l = start;
+                r = end;
+            }
+
+            start++;
+            if (s.charAt(start) in map) {
+                map[s.charAt(start)]++;
+                if (map[s.charAt(start)] > 0) {
+                    keyTypes++;
+                }
+            }
+            
+        }
+    }
+    return s.substring(l, r + 1);
+};
+
+
+
+// s = "(1+(4+5+2)-3)+(6+8)"
+
+
+// type operators = '+' | '-' | '(' | ')';
+enum Operators {
+    '+' = '+',
+    '-' = '-',
+    '(' = '(',
+    ')' = ')',
 }
+function calculate(s: string): number {
+
+    // 用来存放操作符的栈
+    const opStack: Operators[] = [];
+
+    // 用来存放后缀表达式的栈
+    const postfixStack: string[] = [];
+
+    // 遍历 s
+    for (const char of s) {
+        // 如果 char 是数字则直接放在后缀栈中
+        if (!(char in Operators)) {
+            postfixStack.push(char);
+        } else {
+            // 如果是操作符则需要放到 opStack 中
+            // 1. 如果 opStack 为空，则直接放
+            if (opStack.length === 0) {
+                opStack.push(<Operators>char);
+            } else if (
+                // 2.
+            )
+        }
+    }
+};
+
+
+
+
 
 
