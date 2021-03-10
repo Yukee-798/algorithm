@@ -5,9 +5,10 @@ public class Main {
     }
 
     void run() {
-        int[] arr = {1, 2, 0, 19,3, 2, -2};
-        select_sort(arr, 0, arr.length - 1);
-        Util.pirntArr(arr);
+        int i = 3;
+        while(i-- > 0) {
+            System.out.println(i);
+        }
     }
 
 
