@@ -13,6 +13,9 @@ let backup2 = matrix.map((arr) => [...arr]);
 ```
 注意：如果 `let backup2 = [...matrix]`，这样 backup2 虽然和 matrix 不是同一个引用，但是其保存的一维数组是同一样的引用。
 
+
+
+
 ## 图像化二维数组
 二维数组的坐标系原点在矩阵的左上角，`x轴` 朝下，`y轴` 朝右。
 
@@ -45,3 +48,9 @@ matrix.forEach((arr, i) => {
 
 
 ## 数组去重
+
+## 字符数组转为字符串
+```ts
+const charArr = ['a', 'b', 'c'];
+const str = charArr.reucer((pre, current) => pre + current, '');
+```
