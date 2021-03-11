@@ -54,7 +54,7 @@ const t = 'ABC';
 function minWindow(s: string, t: string): string {
 
     // 映射t串
-    let map1 = {};
+    let map1: {[key: string]: any} = {};
 
     for (const char of t) {
         if (!map1[char]) {
@@ -65,7 +65,7 @@ function minWindow(s: string, t: string): string {
     }
 
     // 窗口
-    let map2 = {};
+    let map2: { [key: string]: any } = {};
 
     // 记录最短的窗口端点
     let l = -1, r = -1;
@@ -132,7 +132,7 @@ const t = 'ABC';
 
 
 
-function containAll(map2, map1): boolean {
+function containAll(map2: { [key: string]: any }, map1: { [key: string]: any }): boolean {
     let falg = 0;
     // 遍历 map1
     Object.keys(map1).forEach((key) => {
@@ -159,7 +159,7 @@ function containAll(map2, map1): boolean {
 // console.log(minWindow2(s, t));
 
 function minWindow2(s: string, t: string): string {
-    const map = {};
+    const map: {[key: string]: any} = {};
     let l = -1, r = -1;
     let minLen = s.length + 1;
 
@@ -221,7 +221,7 @@ function minWindow2(s: string, t: string): string {
 
 
 
-// s = "(1+(4+5+2)-3)+(6+8)"
+const ss = "(1+(4+5+2)-3)+(6+8)"
 
 
 // type operators = '+' | '-' | '(' | ')';
@@ -231,8 +231,49 @@ enum Operators {
     '(' = '(',
     ')' = ')',
 }
+
+
+/* 
+    目前只能计算个位数字。。。。
+*/
+calculate('(1)');
 function calculate(s: string): number {
 
+    // 得到后缀表达式
+    const postfix = getPostifxEx(s);
+
+    // 计算后缀表达式
+    const stack: number[] = [];
+
+    console.log(postfix);
+    for (const char of postfix) {
+
+
+        // 如果遍历到的字符是数字，则stack push
+        if (!isNaN(Number(char))) {
+            stack.push(Number(char));
+        } else {
+            // 弹两个元素出来计算
+            const num1 = stack.pop();
+            const num2 = stack.pop();
+
+            if (char === Operators['+']) {
+                // 计算后的值放回去
+                stack.push(num2 + num1);
+            } else {
+                stack.push(num2 - num1);
+            }
+        }
+    }
+    return stack[0];
+};
+
+
+
+
+
+
+function getPostifxEx(s: string): string[] {
     // 用来存放操作符的栈
     const opStack: Operators[] = [];
 
@@ -241,23 +282,64 @@ function calculate(s: string): number {
 
     // 遍历 s
     for (const char of s) {
+        if (char === ' ') continue;
         // 如果 char 是数字则直接放在后缀栈中
         if (!(char in Operators)) {
             postfixStack.push(char);
         } else {
+
+            
+
+            // opStack 的栈顶元素
+            let opStackTop = opStack[opStack.length - 1];
+
+            // 1. 如果 opStack 为空、char 是左括号、opStack 栈顶是左括号则直接放
+            let condition1 = !opStackTop || char === Operators['('] || opStackTop === Operators['('];
+            // 2. 如果 opStack 栈顶元素为 + 或者 - 并且 char 也是 + 或者 - ，则弹栈到后缀栈中
+            let condition2 = (char === Operators['+'] || char === Operators['-']) && (opStackTop === Operators['+'] || opStackTop === Operators['-']);
+            // 3. 如果 char 是右括号，则一直弹栈到左括号结束
+            let condition3 = char === Operators[')'] && opStackTop !== Operators['('];
+
+
+
             // 如果是操作符则需要放到 opStack 中
-            // 1. 如果 opStack 为空，则直接放
-            if (opStack.length === 0) {
+            
+            if (condition1) {
                 opStack.push(<Operators>char);
-            } else if (
-                // 2.
-            )
+                opStackTop = opStack[opStack.length - 1];
+            }
+
+
+           
+            else if (condition2) {
+                while ((char === Operators['+'] || char === Operators['-']) && (opStackTop === Operators['+'] || opStackTop === Operators['-'])) {
+                    postfixStack.push(opStack.pop());
+                    opStackTop = opStack[opStack.length - 1];
+                }
+                // 将 char push 入 opStack
+                opStack.push(<Operators>char);
+                opStackTop = opStack[opStack.length - 1];
+            }
+
+            else if (condition3) {
+                while (char === Operators[')'] && opStackTop !== Operators['(']) {
+                    postfixStack.push(opStack.pop());
+                    opStackTop = opStack[opStack.length - 1];
+                }
+                // 把左括号弹掉
+                opStack.pop();
+            }
         }
     }
-};
+    while (opStack.length !== 0) {
+        const popChar = opStack.pop();
 
+        if (popChar !== Operators['('] && popChar !== Operators[')']) {
+            postfixStack.push(popChar)
+        }
+        
+    }
 
-
-
-
+    return postfixStack;
+}
 
