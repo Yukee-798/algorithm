@@ -236,7 +236,10 @@ enum Operators {
 /* 
     目前只能计算个位数字。。。。
 */
-calculate('(1)');
+
+
+console.log(calculate('1+2-3+4'));
+
 function calculate(s: string): number {
 
     // 得到后缀表达式
@@ -245,7 +248,7 @@ function calculate(s: string): number {
     // 计算后缀表达式
     const stack: number[] = [];
 
-    console.log(postfix);
+    // console.log(postfix);
     for (const char of postfix) {
 
 
@@ -274,6 +277,15 @@ function calculate(s: string): number {
 
 
 function getPostifxEx(s: string): string[] {
+
+
+    const ex = Array.from(s).map((char) => {
+        if (!(char in Operators)) {
+            return +char;
+        }
+        return s;
+    })
+
     // 用来存放操作符的栈
     const opStack: Operators[] = [];
 
