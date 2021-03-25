@@ -54,3 +54,11 @@ matrix.forEach((arr, i) => {
 const charArr = ['a', 'b', 'c'];
 const str = charArr.reucer((pre, current) => pre + current, '');
 ```
+
+## 查看数组中是否含有某个元素
+```ts
+const arr = [1, 2, 3];
+const isContainOne = new Set(arr).has(1);
+
+const isContainTwo = !!(arr.find((value) => value === 2));
+```
