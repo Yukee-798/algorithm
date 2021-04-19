@@ -1,7 +1,12 @@
 // import Util.*;
 public class Main {
     public static void main(String[] args) {
-        new Main().run();
+        // new Main().run();
+        int a = 1000000000;
+        byte b = (byte) a;
+        short c = (short)a;
+        System.out.println(b);
+        System.out.println(c);
     }
 
     void run() {
