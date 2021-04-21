@@ -19,6 +19,9 @@ const push = <T>(arr: T[], ...items: T[]): number => {
     return arr.length;
 }
 
+
+
+
 const splice = <T>(arr: T[], start: number, deleteCount?: number, ...addedList: T[]): T[] => {
     // 判断传入的参数是否有效
     if (start < 0 || start > arr.length - 1) throw 'invalid start: ' + start;

@@ -372,53 +372,7 @@ let isValid = false;
 
 isValid || ++flag;
 
-// console.log(flag);
 
-
-
-const awa = [1, 2, 3, 4, 5, 6];
-
-
-
-
-// console.log(awa.splice(1, 1, ...[0, 0, 0]));
-
-// console.log(awa);
-
-
-/** 
- * @param arr 待操作的数组
- * @param start 操作范围的起始下标
- * @param deleteCounts 被删除元素的个数
- * @param addedList 被传入的其余参数
- * 
- */
-
-/*
- 1 0 0 4 5 6
- 0 1 2 3 4 5
-
- arr[1] = arr[1 + 2]
- arr[2] = arr[2 + 2]
- arr[3] = arr[3 + 2]
-
-
-
-
- 0 0 0 1 4 5 6 
- 0 1 2 3 4 5 6
-
- deleteCounts = 3
- start = 0
- addedList = 0
-
-
- arr[0] = arr[0 + 3]
- arr[1] = arr[2 + 3]
- arr[3] = arr[3 + 3]
- arr[4] = arr[4 + 3]
-
-*/
 
 const push = <T>(arr: T[], ...items: T[]): number => {
     for (let i = 0; i < items.length; i++) {
@@ -427,6 +381,8 @@ const push = <T>(arr: T[], ...items: T[]): number => {
     }
     return arr.length;
 }
+
+
 
 const splice = <T>(arr: T[], start: number, deleteCount?: number, ...addedList: T[]): T[] => {
     // 判断传入的参数是否有效
@@ -450,6 +406,65 @@ const splice = <T>(arr: T[], start: number, deleteCount?: number, ...addedList: 
     // 返回被删除的元素
     return deletedArr;
 }
+
+
+const arr10 = [1, 2, 3, 4, 5];
+// arr10.map()
+
+// arr10.forEach
+
+
+/* 
+    设计思路：
+        1. 函数的 this，表示调用这个函数的对象
+        2. 那么在调用 call 之后，使用该对象来调用原来的方法，这个方法的 this 就会被改变
+
+*/
+
+
+
+const call = (targetFun: Function, thisArg: any, ...argArray: any[]): any => {
+
+    // 如果 thisArg 为空或者undefind 则不必在将 thisArg 绑定为 targetFun 的 this 了
+    if (thisArg === null || thisArg === undefined) return targetFun();
+
+    // 用 Symbol 类型 fn 作为 thisArg 的属性，防止命名冲突
+    const fn = Symbol();
+
+    // 给 thisArg 绑定 fn 属性指向 targetFun
+    thisArg[fn] = targetFun;
+
+    // 用 thisArg 调用 targetFun 并接收返回值
+    const res = thisArg[fn](...[argArray]);
+
+    // 删除刚刚绑定在 thisArg 上的 fn 属性
+    delete thisArg[fn];
+
+    // 返回返回值
+    return res;
+}
+
+
+
+call.apply
+
+
+
+
+const forEach = <T>(arr: T[], callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void => {
+    if (thisArg) {
+        callbackfn = callbackfn.bind(thisArg);
+    }
+    for (let i = 0; i < arr.length; i++) {
+        callbackfn(arr[i], i, arr);
+    }
+}
+
+
+const map = <T>(callbackfn: (value: T, index: number, array: T[]) => unknown, thisAny?: any) => {
+    console.log(this);
+}
+
 
 
 
