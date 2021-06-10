@@ -10,7 +10,13 @@ For a given function, creates a bound function that has the same body as the ori
 ```
 
 ```ts
-const call = (targetFun: Function, thisArg: any, ...argArray: any[]): any => {
+const bind = (targetFun: Function, thisArg: any, ...argArray: any[]): Function => {
+    return function () {
+        return call(targetFun, thisArg, ...argArray);
+    }
+}
+
+function call(targetFun: Function, thisArg: any, ...argArray: any[]): any {
 
     // 如果 thisArg 为空或者undefind 则不必在将 thisArg 绑定为 targetFun 的 this 了
     if (thisArg === null || thisArg === undefined) return targetFun();
@@ -29,12 +35,6 @@ const call = (targetFun: Function, thisArg: any, ...argArray: any[]): any => {
 
     // 返回返回值
     return res;
-}
-
-const bind = (targetFun: Function, thisArg: any, ...argArray: any[]): Function => {
-    return function () {
-        return call(targetFun, thisArg, ...argArray);
-    }
 }
 ```
 

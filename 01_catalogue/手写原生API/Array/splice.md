@@ -45,3 +45,6 @@ const splice = <T>(arr: T[], start: number, deleteCount?: number, ...addedList: 
     return deletedArr;
 }
 ```
+
+
+
