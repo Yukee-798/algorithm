@@ -903,7 +903,7 @@ const floorTrav = (binaryTree: (number | null)[], indexOfRoot: number) => {
 // console.log(/\[\s*\]/g.test(''));
 
 
-let arrrs = [1, 2, 3, 4, 4,3];
+let arrrs = [1, 2, 3, 4, 4, 3];
 
 const judgeSorted = (arr: number[]) => {
     for (let i = 0; i < arr.length - 1; i++) {
@@ -949,7 +949,7 @@ function addToBh(binaryHeap: number[], nodeV: number) {
 
 const binaryHeap: number[] = [];
 
-[3,2,0,10,32,12,42].forEach((value) => {
+[3, 2, 0, 10, 32, 12, 42].forEach((value) => {
     addToBh(binaryHeap, value)
 })
 
@@ -1036,13 +1036,103 @@ function isNum(value: any) {
     return typeof value === 'number' && !isNaN(value);
 }
 
-console.log(isNum({}));
+// console.log(isNum({}));
+
+
+// console.log(13 >> 1);
+
+const map123: any = {};
+
+map123[''] = 123;
+
+// console.log(map123['']);
+
+
+const baas = [49, 59, 88, 37, 98, 97, 68, 54, 31, 3];
+// console.log(aas.pop());
+// console.log(aas);
+
+
+// console.log();
+
+quickSort(baas, 0, baas.length - 1)
+
+// console.log(baas);
+
+function quickSort(arr: number[], l: number, r: number) {
+
+    if (l >= r) return;
+
+    // 分界点下标
+    let pivot = partition(arr, l, r);
+    quickSort(arr, l, pivot - 1);
+    quickSort(arr, pivot + 1, r)
+}
+
+
+// 给数组分界并且获取分界点的下标
+function partition(arr: number[], l: number, r: number) {
+    let compareV = arr[l];
+    let p1 = l + 1, p2 = r;
+    while (p1 <= p2) {
+        while (arr[p1] <= compareV) p1++;
+        while (arr[p2] > compareV) p2--;
+
+        if (p1 <= p2) swap(arr, p1, p2);
+    }
+
+    // 将 compareV 移值分界点
+    swap(arr, l, p2)
+
+    // 返回分界点下标
+    return p2;
+}
 
 
 
+function mergeSort(arr: number[], l: number, r: number) {
+    if (l >= r) return;
+    // 中间分界点
+    let mid = l + r >> 1;
+
+    mergeSort(arr, l, mid);
+    mergeSort(arr, mid + 1, r);
+
+    // 建立辅助空间
+    let helper = [...arr];
+    // 扫描辅助空间
+    let k = 0;
+    // 扫描数组两段区间
+    let p1 = l, p2 = mid + 1;
+
+    // p1 或者 p2 但凡有一个越过其边界则停止比较
+    while (p1 <= mid && p2 <= r) {
+        // 如果 p1 指向的值小于 p2 的则将其放到辅助空间，并且指针后移
+        if (arr[p1] <= arr[p2]) helper[k++] = arr[p1++];
+        else helper[k++] = arr[p2++];
+    }
+
+    // 如果 p1 没有扫描完其区间
+    while (p1 <= mid) helper[k++] = arr[p1++];
+
+    // 如果 p2 没有扫描完其区间
+    while (p2 <= r) helper[k++] = arr[p2++];
+
+    // 将辅助空间中归并后的结构拷贝到原数组中
+    for (let i = l, j = 0; i <= r; i++, j++) arr[i] = helper[j];
+}
 
 
+const arsws = [3, 2 ,0 , 1,3 ,2, 9];
+
+mergeSort(arsws, 0, arsws.length - 1);
+
+// console.log(arsws);
 
 
-
+let asd = 10;
+for (let i = 0; i > 10; i++) {
+    asd += 100;
+}
+console.log(asd);
 
